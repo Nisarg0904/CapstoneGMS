@@ -10,7 +10,7 @@ const GroceryItem = groceryItemDB.define(
       autoIncrement: true,
     },
     item_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     purchased_price: {

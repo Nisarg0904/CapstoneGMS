@@ -21,7 +21,7 @@ async function testDBConnection() {
 testDBConnection();
 
 
-app.use('/api/grocery-items', groceryItemRoutes);
+app.use('/api/groceryitems', groceryItemRoutes);
 
 // Root route for health check
 app.get('/', (req, res) => {

@@ -9,7 +9,7 @@ module.exports = {
         autoIncrement: true,
       },
       item_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(24),
         allowNull: false, // Store reference to MongoDB's item ID (handle consistency programmatically)
       },
       purchased_price: {

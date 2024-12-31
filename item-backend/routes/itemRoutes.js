@@ -1,6 +1,7 @@
 const express = require("express");
 const Item = require("../models/Item");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 // Create a new item
 router.post("/", async (req, res) => {
@@ -45,5 +46,31 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+// Get item by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validate the ID format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    // Fetch the item
+    const item = await Item.findById(id);
+
+    // If the item is not found
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json(item);
+  } catch (err) {
+    console.error("Error fetching item:", err); // Log the error
+    res.status(500).json({ message: "Server error while fetching the item" });
+  }
+});
+
 
 module.exports = router;

@@ -173,4 +173,36 @@ router.get("/profile", authenticateToken, async (req, res) => {
   }
 });
 
+// Get User by ID Route
+router.get("/:id", async (req, res) => {
+  const { id } = req.params; // Extract user ID from the route parameter
+
+  try {
+    // Find the user by ID
+    const user = await User.findByPk(id);
+
+    // If user is not found, return a 404 error
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Respond with the user details
+    res.status(200).json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      shoppingActivity: user.shoppingActivity,
+      dietPreference: user.dietPreference,
+      cookingForPeople: user.cookingForPeople,
+      cuisinePreference: user.cuisinePreference,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Server error while fetching user details",
+    });
+  }
+});
+
 module.exports = router;
